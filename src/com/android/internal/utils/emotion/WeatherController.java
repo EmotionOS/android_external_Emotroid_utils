@@ -32,6 +32,7 @@ public interface WeatherController {
         public String condition = null;
         public int conditionCode = 0;
         public Drawable conditionDrawable = null;
-        public String temp = null;
+        public double temp = Double.NaN;
+        public int tempUnit;
     }
 }
