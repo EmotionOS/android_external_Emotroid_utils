@@ -198,7 +198,15 @@ public class WeatherControllerImpl implements WeatherController {
     }
 
     private void queryWeatherTempUnit() {
-        mWeatherUnit = CMWeatherManager.getSelectedTemperatureUnit(mContext);
+        try {
+            mWeatherUnit = CMSettings.Global.getInt(mContext.getContentResolver(),
+                    CMSettings.Global.WEATHER_TEMPERATURE_UNIT);
+        } catch (CMSettings.CMSettingNotFoundException e) {
+            //CMSettingsProvider should have taken care of setting a default value for this setting
+            //so how is that we ended up here?? We need to set a valid temp unit anyway to keep
+            //this going
+            mWeatherUnit = WeatherContract.WeatherColumns.TempUnit.CELSIUS;
+        }
     }
 
     private void fixCachedWeatherInfo() {
